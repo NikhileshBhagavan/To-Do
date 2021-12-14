@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body>
+    <center>
+        <h1 id="heading" style="display:inline-block;">
+            <%= thisday %>,
+                <%= thismonth %>
+                    <%= thisdate %>
+        </h1>
+        <button type="button" class="speech"><i class="fa fa-volume-up" style="font-size:20px"></i></button>
+    </center>
+
+    <div class="box">
+        <form method="POST" action="/deletelists" id="myForm">
+            <%   for(let i=0;i<array.length;i++){  %>
+
+                <div class="item">
+                    <input type="checkbox" class="delete" name="listtodelete" value="<%= array[i].document_no %>">
+                    <span id="<%= array[i].document_no %>"><%=  array[i].list  %> </span>
+                </div>
+
+
+                <% } %>
+
+
+        </form>
+    </div>
+
+    <form action="/addlist" method="POST">
+
+        <input type="text" name="newtodo" placeholder="New item" required autocomplete="off">
+        <button type="submit"><center>+</center></button>
+        <button type="button" class="show type2">-</button>
+
+
+    </form>
+    <div class="logout"><a href="/logout">Logout</a></div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        var z = "<%= thisday %>";
+        var user = "<%= user.username %>"
+    </script>
+    <script src="/todo.js"></script>
+</body>
+
+</html>
