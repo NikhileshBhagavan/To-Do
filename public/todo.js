@@ -46,13 +46,14 @@ $(document).ready(function() {
 var currentdate = new Date();
 let period = null;
 let hour = currentdate.getHours();
-if (hour <= 12 && hour >= 5) {
+
+if (hour < 12 && hour >= 5) {
     period = "morning";
 }
-if (hour <= 17 && hour > 12) {
+if (hour < 17 && hour >= 12) {
     period = "afternoon";
 }
-if (hour <= 21 && hour > 17) {
+if (hour < 21 && hour >= 17) {
     period = "evening";
 }
 if ((hour <= 24 && hour >= 21) || hour < 5) {
