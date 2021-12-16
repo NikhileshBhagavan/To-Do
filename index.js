@@ -1,30 +1,41 @@
 require('dotenv').config()
-const alert = require('alert');
+
 const nodemailer = require('nodemailer');
+
 const md5 = require('md5');
 const models = require("./models/Collections.js");
-console.log(models);
+
+
 
 const flash = require('connect-flash');
+
 const express = require("express");
+
 const bodyparser = require("body-parser");
+
 const ejs = require('ejs');
+
 const app = express();
 
 app.use(flash());
 
 const PORT = 3000;
 
-const session = require('express-session')
+const session = require('express-session');
+
 const passport = require("passport");
 
 
 app.use(bodyparser.urlencoded({
     extended: true
 }));
+
 app.use(bodyparser.json());
+
 app.use(express.static('public'));
+
 app.set('view engine', 'ejs');
+
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
@@ -37,24 +48,25 @@ app.use(session({
 
 
 }));
+
 app.use(passport.initialize());
+
 app.use(passport.session());
-
-
-
 
 
 app.get("/", function(req, res) {
 
     let message = req.flash("error");
     let success_msg = req.flash("success");
-
+    console.log(req.session);
 
     res.render("credentials", { messages: message, successmessages: success_msg });
-})
+});
+
 app.listen(PORT, function(req, res) {
     console.log("listening to PORT 3000");
 });
+
 app.post("/register", function(req, res) {
     console.log(req.body);
     console.log(req.flash("error"));
@@ -188,7 +200,7 @@ app.post('/login',
 
         if (req.body.remember.length === 13) {
             req.session.cookie.expires = false;
-            //4 weeks
+
         } else {
             var hour = 3600000;
             req.session.cookie.maxAge = 2 * 14 * 24 * hour;

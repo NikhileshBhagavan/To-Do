@@ -1,29 +1,35 @@
 const mongoose = require("mongoose");
+
 const passportlocalmongoose = require("passport-local-mongoose");
+
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
+
 const findOrCreate = require('mongoose-findorcreate');
+
 const passport = require("passport");
+
 const session = require('express-session');
+
 mongoose.connect("mongodb://localhost:27017/DB");
 
 
-console.log("hi");
-/*const todolistschema = new mongoose.Schema({
 
-    list: String
-});
-const listmodel = mongoose.model("todolist", todolistschema);*/
+
 const userschema = new mongoose.Schema({
     username: String,
     password: String,
     otp: String,
     lists: [{ document_no: Number, list: String }]
 });
+
 userschema.plugin(passportlocalmongoose); //automatically do hash+salt our passwords
+
 userschema.plugin(findOrCreate);
+
 const usermodel = mongoose.model("user", userschema);
 
 passport.use(usermodel.createStrategy());
+
 passport.serializeUser(function(user, done) {
     done(null, user.id);
 });
@@ -34,6 +40,7 @@ passport.deserializeUser(function(id, done) {
     });
 });
 passport.use(new GoogleStrategy({
+
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         callbackURL: "http://localhost:3000/auth/google/todolist",
@@ -64,7 +71,7 @@ passport.use(new GoogleStrategy({
                 }
 
             });
-            console.log("jdchdhv");
+
 
         });
     }
